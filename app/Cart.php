@@ -10,4 +10,15 @@ class Cart extends Model
     public function details(){
         return $this->hasMany('App\CartDetail');
     }
+
+    /*accesor*/
+    public function getTotalAttribute(){
+        $total=0;
+
+        foreach ($this->details as $detail){
+            $total+=($detail->quantity*$detail->product->price);
+        }
+
+        return $total;
+    }
 }

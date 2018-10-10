@@ -45,12 +45,24 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Descripción corta</label>
                                 <input type="text" class="form-control" name="description" value="{{old('description')}}">
                             </div>
                         </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="inputState" class="float-left">Categoría</label>
+                                <select id="inputState" class="form-control" name="category_id">
+                                    <option value="{{null}}" selected>General</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="row">
@@ -64,6 +76,7 @@
                     </div>
 
                     <button class="btn btn-primary">Registrar</button>
+                    <a href="{{route('products.index')}}" class="btn btn-warning">Cancelar</a>
                 </form>
             </div>
 

@@ -25,7 +25,7 @@
     <div class="container">
         <div class="navbar-translate">
             <a class="navbar-brand" href="{{route('inicio')}}">
-                Mi Tienda Virtual</a>
+                {{config('app.name')}}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="navbar-toggler-icon"></span>
@@ -77,6 +77,7 @@
                             <a href="{{route('home')}}" class="dropdown-item">Ir al Dashboard</a>
 
                             @if(auth()->user()->admin)
+                                <a href="{{route('categories.index')}}" class="dropdown-item">Gestionar Categorías</a>
                                 <a href="{{route('products.index')}}" class="dropdown-item">Gestionar Productos</a>
                             @endif
 
@@ -130,6 +131,8 @@
 <script src="{{asset('js/plugins/jquery.sharrre.js')}}" type="text/javascript"></script>
 <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->
 <script src="{{asset('js/material-kit.js?v=2.0.4')}}" type="text/javascript"></script>
+
+@yield('scripts')
 
 </body>
 

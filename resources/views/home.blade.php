@@ -97,6 +97,12 @@
                                 </tr>
                             @endforeach
                             </tbody>
+                            <tfooter>
+                                <tr>
+                                    <td colspan="4"><strong>Total a Pagar</strong></td>
+                                    <td><strong>{{auth()->user()->active_cart->total}}</strong></td>
+                                </tr>
+                            </tfooter>
                         </table>
                         <hr>
                         <p class="text-primary">Has agregado {{auth()->user()->active_cart->details->count()}} items a tu carrito</p>

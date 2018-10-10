@@ -47,10 +47,21 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Descripción corta</label>
                                 <input type="text" class="form-control" name="description" value="{{old('description',$product->description)}}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="inputState" class="float-left">Categoría</label>
+                                <select id="inputState" class="form-control" name="category_id">
+                                    <option value="{{null}}">General</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{$category->id}}" @if($category->id==old('category_id',$product->category_id)) selected @endif>{{$category->name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>

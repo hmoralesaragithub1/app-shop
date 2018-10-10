@@ -35,4 +35,13 @@ class Product extends Model
         devolvemos imagen default*/
         return '/images/products/default_product.png';
     }
+
+    /*accesor o campo calculado*/
+    public function getCategoryNameAttribute(){
+        if($this->category){
+            return $this->category->name;
+        }
+
+        return 'General';
+    }
 }

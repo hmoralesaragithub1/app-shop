@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Category;
 use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -18,8 +19,9 @@ class ProductController extends Controller
 
     public function create(){
 
+        $categories=Category::orderBy('name')->get();
         /*form para creacion*/
-        return view('admin.products.create');
+        return view('admin.products.create')->with(compact('categories'));
     }
 
     public function store(Request $request){
@@ -52,8 +54,9 @@ class ProductController extends Controller
     public function edit($id){
 
         $product=Product::findOrFail($id);
+        $categories=Category::orderBy('name')->get();
         /*form para creacion*/
-        return view('admin.products.edit')->with(compact('product'));
+        return view('admin.products.edit')->with(compact('product','categories'));
     }
 
     public function update(Request $request,$id){

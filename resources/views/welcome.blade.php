@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Bienvenidos a Latina
+    Bienvenidos a {{config('app.name')}}
 @endsection
 
 @section('main-body-class')
@@ -29,8 +29,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h1 class="title">Hey, Somos Latina, ya llegamos</h1>
-                    <h4>Latina ha llegado para brindarte los mejores productos cosméticos de calidad, al mejor precio y seremos por siempre tu mejor opción</h4>
+                    <h1 class="title">Hey, Somos {{config('app.name')}}, ya llegamos</h1>
+                    <h4>{{config('app.name')}} ha llegado para brindarte los mejores productos cosméticos de calidad, al mejor precio y seremos por siempre tu mejor opción</h4>
                     <br>
                     <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn btn-danger btn-raised btn-lg">
                         <i class="fa fa-play"></i> Conócenos un poco más
@@ -44,7 +44,7 @@
             <div class="section text-center">
                 <div class="row">
                     <div class="col-md-8 ml-auto mr-auto">
-                        <h2 class="title">¿Porque elegir Latina?</h2>
+                        <h2 class="title">¿Porque elegir {{config('app.name')}}?</h2>
                         <h5 class="description">Nuestros productos son de marcas reconicidas mundialmente, y te los ofrecemos al mejor precio y con total calidad. Estamos comprometidos con la satisfacción total de nuestros clientes y para esto te damos nuestras características principales</h5>
                     </div>
                 </div>
@@ -81,24 +81,33 @@
                 </div>
             </div>
             <div class="section text-center">
-                <h2 class="title">Productos Disponibles</h2>
+                <h2 class="title">Visita Nuestras Categorías</h2>
+
+                <form class="form-group" action="{{route('search')}}" method="GET">
+                        <input type="text" placeholder="¿Que producto buscas?" class="form-control" name="query" id="query">
+                        <button class="btn btn-primary btn-round">
+                            <i class="material-icons">search</i> Buscar
+                        </button>
+                </form>
+
                 <div class="team">
                     <div class="row">
-                        @foreach($products as $product)
+                        @foreach($categories as $category)
                             <div class="col-md-4">
                             <div class="team-player">
                                 <div class="card card-plain border border-success">
                                     <div class="col-md-6 ml-auto mr-auto">
                                         {{-- <img src="{{asset('img/faces/avatar.jpg')}}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid"> --}}
                                         {{-- <img src="{{$product->images()->first()->image}}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid"> --}}
-                                        <img src="{{asset($product->featured_image_url)}}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
+                                        <img src="{{asset($category->featured_image_url)}}" alt="Thumbnail Image" class="img-raised rounded-circle img-fluid">
                                     </div>
-                                    <a href="{{route('products.show',$product->id)}}" class="card-title h4">{{$product->name}}
+                                    <a href="{{route('categories.show',$category->id)}}" class="card-title h4">{{$category->name}}
                                         <br>
-                                        <small class="card-description text-muted">{{$product->category->name}}</small>
+                                        {{-- accedemos a un campo calculado--}}
+                                        {{-- <small class="card-description text-muted">{{$product->category_name}}</small> --}}
                                     </a>
                                     <div class="card-body">
-                                        <p class="card-description">{{$product->description}}</p>
+                                        <p class="card-description">{{$category->description}}</p>
                                     </div>
                                     {{--
                                         <div class="card-footer justify-content-center">
@@ -160,9 +169,12 @@
                         --}}
                         @endforeach
                     </div>
-                    <div class="row">
+                    {{--
+                     <div class="row">
                         {{$products->links()}}
                     </div>
+                    --}}
+
                 </div>
             </div>
             <div class="section section-contacts">
@@ -204,4 +216,32 @@
     </div>
     @include('includes.footer')
 
+@endsection
+
+@section('scripts')
+    <script src="{{asset('js/typeahead.bundle.min.js')}}"></script>
+    {{--inicializamos typeahead--}}
+    <script>
+        $(function () {
+
+            var products = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                // url points to a json file that contains an array of country names, see
+                // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
+                prefetch: '{{route('data_json')}}'
+            });
+
+           $('#query').typeahead({
+                   hint: true,
+                   highlight: true,
+                   minLength: 1
+           },
+               {
+                   name: 'products',
+                   source: products
+               }
+               );
+        });
+    </script>
 @endsection

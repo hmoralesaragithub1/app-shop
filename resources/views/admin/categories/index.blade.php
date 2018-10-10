@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Listado de Productos
+    Listado de Categorías
 @endsection
 
 @section('main-body-class')
@@ -64,7 +64,7 @@
                     </div>
                 @endif
 
-                <h2 class="title">Listado de Productos</h2>
+                <h2 class="title">Listado de Categorías</h2>
                 <div class="team">
                     <div class="row">
                         {{-- @foreach($products as $product)
@@ -139,7 +139,7 @@
     --}}
         {{-- @endforeach --}}
 
-                            <a href="{{route('products.create')}}" class="btn btn-primary btn-round m-auto">Nuevo Producto</a>
+                            <a href="{{route('categories.create')}}" class="btn btn-primary btn-round m-auto">Nueva Categoría</a>
 
                             <table class="table table-responsive table-bordered table-hover mt-2">
                                 <thead>
@@ -147,36 +147,27 @@
                                     <th class="text-center" width="2%">#</th>
                                     <th width="20%">Nombre</th>
                                     <th width="30%">Descripción</th>
-                                    <th>Categoría</th>
-                                    <th>Precio</th>
                                     <th>Opciones</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($products as $product)
+                                @foreach($categories as $category)
                                 <tr>
-                                    <td class="text-center">{{$product->id}}</td>
-                                    <td>{{$product->name}}</td>
-                                    <td>{{$product->description}}</td>
-                                    {{-- mediante atributo calculado accesor--}}
-                                    <td>{{$product->category_name}}</td>
-                                    <td class="">&euro; {{$product->price}}</td>
+                                    <td class="text-center">{{$category->id}}</td>
+                                    <td>{{$category->name}}</td>
+                                    <td>{{$category->description}}</td>
                                     <td class="td-actions">
                                         {{-- ELIMINACIÓN --}}
-                                        <form action="{{route('products.destroy',$product->id)}}" method="POST">
+                                        <form action="{{route('categories.destroy',$category->id)}}" method="POST">
                                             {!! csrf_field() !!}
                                             {!! method_field('DELETE') !!}
                                             {{-- -por diseño colocamos estas opciones dentro del form--}}
-                                            <a href="{{route('products.show',$product->id)}}" rel="tooltip" class="btn btn-info btn-sm" title="Ver Detalle" target="_blank">
+                                            <a type="button" rel="tooltip" class="btn btn-info btn-sm" title="Ver Detalle">
                                                 <i class="material-icons">pageview</i>
                                             </a>
-                                            <a href="{{route('products.edit',$product->id)}}" rel="tooltip" class="btn btn-success btn-sm" title="Editar">
+                                            <a href="{{route('categories.edit',$category->id)}}" rel="tooltip" class="btn btn-success btn-sm" title="Editar">
                                                 <i class="material-icons">edit</i>
                                             </a>
-                                            <a href="{{route('images.index',$product->id)}}" rel="tooltip" class="btn btn-warning btn-sm" title="Imágenes del Producto">
-                                                <i class="material-icons">photo_album</i>
-                                            </a>
-
                                             <button type="submit" rel="tooltip" class="btn btn-danger btn-sm" title="Eliminar">
                                                 <i class="material-icons">close</i>
                                             </button>
@@ -188,7 +179,7 @@
                                 </tbody>
                             </table>
 
-                            {{$products->links()}}
+                            {{$categories->links()}}
 
 
                     </div>
