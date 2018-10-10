@@ -66,12 +66,19 @@
                 </div> --}}
 
                 <!-- Button trigger modal -->
-                <div class="text-center">
-                    <button class="btn btn-primary btn-round" type="button"  data-toggle="modal" data-target="#modalCarrito">
-                        <i class="material-icons">add_shopping_cart</i> Añadir al Carrito
-                    </button>
-                </div>
-
+                @if(auth()->check())
+                    <div class="text-center">
+                        <button class="btn btn-primary btn-round" type="button"  data-toggle="modal" data-target="#modalCarrito">
+                            <i class="material-icons">add_shopping_cart</i> Añadir al Carrito
+                        </button>
+                    </div>
+                @else
+                    <div class="text-center">
+                        <a class="btn btn-primary btn-round" href="{{url('/login?redirect_to='.url()->current())}}">
+                            <i class="material-icons">add_shopping_cart</i> Añadir al Carrito
+                        </a>
+                    </div>
+                @endif
                 <div class="tab-content tab-space">
                     <div class="tab-pane active text-center gallery" id="studio">
                         <div class="row">
