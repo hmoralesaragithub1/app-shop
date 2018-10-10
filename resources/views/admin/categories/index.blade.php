@@ -147,6 +147,7 @@
                                     <th class="text-center" width="2%">#</th>
                                     <th width="20%">Nombre</th>
                                     <th width="30%">Descripción</th>
+                                    <th>Imagen</th>
                                     <th>Opciones</th>
                                 </tr>
                                 </thead>
@@ -156,6 +157,9 @@
                                     <td class="text-center">{{$category->id}}</td>
                                     <td>{{$category->name}}</td>
                                     <td>{{$category->description}}</td>
+                                    <td>
+                                        <img src="{{asset($category->featured_image_url)}}" alt="imagen de categoría" height="50">
+                                    </td>
                                     <td class="td-actions">
                                         {{-- ELIMINACIÓN --}}
                                         <form action="{{route('categories.destroy',$category->id)}}" method="POST">

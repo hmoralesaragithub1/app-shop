@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class CartDetailController extends Controller
 {
+    public function __construct()
+    {
+        /*todos los metodos de este controlador necesitan autenticacion*/
+        $this->middleware('auth');
+    }
+
     //
     public function store(Request $request){
 

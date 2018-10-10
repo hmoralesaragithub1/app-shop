@@ -26,7 +26,7 @@
                     </ul>
                 </div>
                 @endif
-                <form class="form-group" action="{{route('categories.store')}}" method="POST">
+                <form action="{{route('categories.store')}}" method="POST" enctype="multipart/form-data">
                     {!! csrf_field() !!}
 
                     <div class="row">
@@ -35,6 +35,10 @@
                                 <label class="control-label">Nombre de la Categoría</label>
                                 <input type="text" class="form-control" name="name" value="{{old('name')}}">
                             </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="control-label float-left">Imagén de la Categoría</label>
+                            <input type="file" name="image" class="form-control">
                         </div>
                     </div>
 

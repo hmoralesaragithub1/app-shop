@@ -86,7 +86,17 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-md-6 ml-auto mr-auto">
-                <div class="card card-login">
+                <div class="card card-login" style="height: 620px;">
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li class="text-left"><strong>Error!</strong> {{$error}}.</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <form class="form" method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
                         @csrf
                         <div class="card-header card-header-primary text-center">
@@ -119,10 +129,38 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                     <span class="input-group-text">
+                      <i class="material-icons">fingerprint</i>
+                    </span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Username" name="username" value="{{ old('username') }}" required autofocus>
+                            </div>
+
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                    <span class="input-group-text">
                       <i class="material-icons">mail</i>
                     </span>
                                 </div>
-                                <input placeholder="Correo Electrónico" id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                                <input placeholder="Correo Electrónico" id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" autofocus>
+                            </div>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="material-icons">phone</i>
+                    </span>
+                                </div>
+                                <input placeholder="Teléfono" id="phone" type="phone" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}" required autofocus>
+                            </div>
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="material-icons">class</i>
+                    </span>
+                                </div>
+                                <input placeholder="Dirección" id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}" required autofocus>
                             </div>
 
                             <div class="input-group">

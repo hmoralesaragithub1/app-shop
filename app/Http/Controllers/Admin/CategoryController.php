@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 
 class CategoryController extends Controller
 {
@@ -45,7 +46,32 @@ class CategoryController extends Controller
         $this->validate($request,Category::$rules,Category::$messages);
 
         /*asignacion masiva de datos*/
-        Category::create($request->all());
+        $category=Category::create($request->only('name','description'));
+
+        if($request->hasFile('image')){
+            /*vamos a guardar la imagen en el proyecto*/
+            $file=$request->file('image');
+
+            /*public_path() = C:\xampp\htdocs\app-shop\public*/
+            $path=public_path().'/images/categories';
+
+            /*uniqid=entero unico */
+            /*$file->getClientOriginalName()=nombre original del archivo cargado*/
+            $fileName=uniqid().$file->getClientOriginalName();
+
+            /*movemos el archivo del tmp a public*/
+            $moved=$file->move($path,$fileName);
+
+            //dd($path.'/'.$fileName);
+            //$ruta_ver=$path.'/'.$fileName;
+
+            /*vamos a guardar la ruta de la imagen en la bd*/
+            if($moved){
+                $category->image=$fileName;
+                $category->update();
+            }
+
+        }
 
         return redirect()->route('categories.index')->with('info','Categoría creada correctamente!!!');
     }
@@ -89,7 +115,40 @@ class CategoryController extends Controller
         /*ya no usamo where porque al recibir el id en un obejto Category automaticamente
         busca la categoria con ese id*/
 
-        $category->update($request->all());
+        $category->update($request->only('name','description'));
+
+        if($request->hasFile('image')){
+            /*vamos a guardar la imagen en el proyecto*/
+            $file=$request->file('image');
+
+            /*public_path() = C:\xampp\htdocs\app-shop\public*/
+            $path=public_path().'/images/categories';
+
+            /*uniqid=entero unico */
+            /*$file->getClientOriginalName()=nombre original del archivo cargado*/
+            $fileName=uniqid().$file->getClientOriginalName();
+
+            /*movemos el archivo del tmp a public*/
+            $moved=$file->move($path,$fileName);
+
+            //dd($path.'/'.$fileName);
+            //$ruta_ver=$path.'/'.$fileName;
+
+            /*vamos a guardar la ruta de la imagen en la bd*/
+            if($moved){
+
+                /*borramos la imagen anterior del disco*/
+                $previousPath=$path.'/'.$category->image;
+
+                $category->image=$fileName;
+                $updated=$category->update();
+
+                if($updated){
+                    File::delete($previousPath);
+                }
+            }
+
+        }
 
         return redirect()->route('categories.index')->with('info','Categoría actualizada correctamente!!!');
     }

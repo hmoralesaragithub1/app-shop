@@ -112,10 +112,10 @@
                             <div class="input-group">
                                 <div class="input-group-prepend">
                     <span class="input-group-text">
-                      <i class="material-icons">mail</i>
+                      <i class="material-icons">fingerprint</i>
                     </span>
                                 </div>
-                                <input placeholder="Email..." id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                                <input placeholder="Username..." id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus>
                             </div>
 
                             <div class="input-group">
@@ -124,7 +124,7 @@
                       <i class="material-icons">lock_outline</i>
                     </span>
                                 </div>
-                                <input placeholder="Password..." id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                                <input placeholder="Contraseña..." id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
                             </div>
 
                             <div class="input-group checkbox">

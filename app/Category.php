@@ -29,7 +29,16 @@ class Category extends Model
     }
 
     public function getFeaturedImageUrlAttribute(){
+
+        if($this->image){
+            return '/images/categories/'.$this->image;
+        }
         $featuredProduct=$this->products()->first();
-        return $featuredProduct->featured_image_url;
+        if($featuredProduct){
+            return $featuredProduct->featured_image_url;
+        }
+
+        /*imagen por defecto*/
+        return '/images/products/default_product.png';
     }
 }
